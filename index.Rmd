@@ -1,0 +1,226 @@
+---
+pagetitle: Confidence intervals for a regression coefficient
+output: 
+  revealjs::revealjs_presentation:
+    incremental: false
+    theme: solarized
+    self_contained: false
+    # reveal_plugins: ["menu","notes","chalkboard"]
+    reveal_plugins: ["menu"]
+    highlight: pygments
+    center: true
+    transition: none
+    background_transition: none 
+    reveal_options:
+      # chalkboard:
+      #   theme: whiteboard
+      #   toggleNotesButton: true
+      #   toggleChalkboardButton: true
+      menu:
+        numbers: true
+      slideNumber: true
+      previewLinks: false
+    fig_caption: true
+    pandoc_args:
+    - --indented-code-classes
+    - lineNumbers
+    css: mystyle.css
+    
+--- 
+
+<section>
+
+<h1>Confidence intervals for a regression coefficient</h1>
+
+Based on Stock and Watson, ch. 5
+
+<br>
+
+<h2>[Jesper Bagger](mailto:jesper.bagger@rhul.ac.uk)</h2>
+
+<h3>EC2203 | Royal Holloway | 2020/21</h3>
+
+</section>
+
+
+```{r results='asis', echo=FALSE, include=FALSE}
+library(AER) # load Applied Econometrics with R library
+library(parameters) # Load parameters library for robust SE computation
+data(CASchools) # Load CASchools data
+# Generate a couple of useful variables
+CASchools$STR <- CASchools$students/CASchools$teachers  # Student-teacher ratio
+CASchools$Score <- (CASchools$read + CASchools$math)/2  # Student test score
+data(CPSSWEducation) # Load CPSSWEducation data
+```
+
+# The $t$-test
+
+## The simple linear regression model
+
+- The **population** regression model is
+
+  <div class="box">
+  $$Y_i = \beta_0 + \beta_1 X_i + u_i; \quad i = 1,\ldots,n$$
+  </div>
+
+- $\beta_0$ and $\beta_1$ are population parameters; they are **fixed (non-random), but unknown**
+
+- The data $(Y_i,X_i; i=1,\ldots,n) \,$ is a **random sample** from the population of $Y$ and $X$
+
+- Assume the Least Squares assumptions for causal inference are satisfied
+
+## The large-sample sampling distribution 
+
+<!-- - Finite-$n$ sampling distribution of $\hat{\beta}_1$ complicated, but **large-sample distribution** easier to obtain -->
+
+<div class="box">
+Under the OLS assumptions for causal inference, in large samples, $\hat{\beta}_1$ is approximately distributed according to the Normal distribution:
+
+$$\hat{\beta}_1 \overset{\text{approx}}{\sim} \mathcal{N}\left(\beta_1,\sigma^2_{\hat{\beta}_1} \right)$$
+<!-- $$\hat{\beta}_1 \sim \mathcal{N}\left(\beta_1,\frac{1}{n} \frac{\mathrm{var}[(X_i - \mu_X)u_i]}{\mathrm{var}(X_i)^2}\right)$$ -->
+</div>
+
+## The $t$-statistic
+
+$$H_0: \, \beta_1 = \beta_{1,0}; \quad H_1: \, \beta_1 \neq \beta_{1,0}$$
+
+- When the Least Squares assumptions for causal inference holds and $H_0$ is true, then $\hat{\beta}_1 \overset{\text{approx}}{\sim} \mathcal{N}(\beta_{1,0},\hat{\sigma}^2_{\hat{\beta}_1})$, and 
+
+  $$t = \frac{\hat{\beta}_1-\beta_{1,0}}{\hat{\sigma}_{\hat{\beta}_1}} \overset{\text{approx}}{\sim} \mathcal{N}\left(0,1 \right)$$
+  
+  where $\hat{\sigma}_{\hat{\beta}_1}$ is a consistent (robust!) estimator of $\sigma_{\hat{\beta}_1}$.
+
+- $t$-test of $H_0$ with significance level $\alpha =0.05$: reject $H_0$ if $|t| > 1.96$; otherwise, do not reject $H_0$
+
+## Significance levels and critical values
+
+```{r echo=FALSE, error=FALSE, warning=FALSE, out.width = "70%"}
+# Plot the standard normal on the support [-6,6]
+t <- seq(-6, 6, 0.01)
+par(mar = c(4.1,4.1,0.1,4.1))
+plot(x = t, 
+     y = dnorm(t, 0, 1), 
+     type = "l", 
+     col = "blue", 
+     lwd = 3, 
+     yaxs = "i",
+     ylab = "Density",
+     xaxt="n",
+     xlab = "t-value",
+     ylim = c(0, 0.45) )
+
+tact <- -0.54
+
+axis(1, at = c(0, -1.96, 1.96, -tact, tact,-4.75,4.75))
+
+# Shade the critical regions using polygon():
+
+#critical region in left tail
+
+polygon(x = c(-6, seq(-6, -1.96, 0.01), -1.96),
+        y = c(0, dnorm(seq(-6, -1.96, 0.01)), 0),
+        col = 'gray90')
+
+# critical region in right tail
+
+polygon(x = c(1.96, seq(1.96, 6, 0.01), 6),
+        y = c(0, dnorm(seq(1.96, 6, 0.01)), 0),
+        col = 'gray90')
+
+# Add arrows and texts indicating critical regions and the p-value
+arrows(-3.5, 0.25, -2.5, 0.02, length = 0.1)
+arrows(3.5, 0.25, 2.5, 0.02, length = 0.1)
+
+arrows(-5, 0.16, -0.54, 0, length = 0.1)
+arrows(5, 0.16, 0.54, 0, length = 0.1)
+
+arrows(-5, 0.16, -4.75, 0, length = 0.1)
+arrows(5, 0.16, 4.75, 0, length = 0.1)
+
+
+text(-3.5, 0.27,
+     labels = expression("0.025"~"="~over(alpha, 2)),
+     cex = 2)
+text(3.5, 0.27,
+     labels = expression("0.025"~"="~over(alpha, 2)),
+     cex = 2)
+
+text(-5, 0.18, 
+     labels = expression(paste("-|",t,"|")), 
+     cex = 2)
+text(5, 0.18, 
+     labels = expression(paste("|",t,"|")), 
+     cex = 2)
+
+
+```
+
+## Test scores and class sizes
+
+$$Score_i = \beta_0 + \beta_1 STR_i + u_i; \quad i = 1,\ldots,n$$
+
+$$H_0: \, \beta_1 = 0; \quad H_1: \, \beta_1 \neq 0$$
+
+```{r echo=TRUE, error=FALSE, warning=FALSE}
+# Regression of Score on STR using CASchools dataframe
+lm1 <- lm(Score ~ STR, data = CASchools) # Fitted model in lm1
+# Regression output with heteroskedastic robust SEs
+parameters(lm1, robust = TRUE, vcov_type = "HC1")
+```
+
+
+
+# Confidence intervals
+
+## Many, many $t$-tests 
+
+- Thought experiment: test all possible hypothesized values for $\beta_1$ with 5% significance level, record rejections and non-rejections
+
+- Given $\hat{\beta}_1$ and $\hat{\sigma}_{\hat{\beta}_1}$, which hypothesized values $\beta_{1,0}$ for $\beta_1$ are not rejected?
+
+  $$\left| \frac{\hat{\beta}_1-\beta_{1,0}}{\hat{\sigma}_{\hat{\beta}_1}} \right| < 1.96$$
+
+## 95%-confidence interval
+
+- The outlined test procedure implies that we fail to reject $H_0: \beta_1 = \beta_{1,0}$ for $\beta_{1,0}$ in the following interval:
+
+  <div class="box">
+  $$\hat{\beta}_1-1.96 \times \hat{\sigma}_{\hat{\beta}_1}  \leq   \beta_{1,0} \leq \hat{\beta}_1+ 1.96\times \hat{\sigma}_{\hat{\beta}_1}$$
+  </div>
+
+- Estimate of range of $\beta_1$-values, called a **95%-confidence interval** for $\beta_1$ (abbreviated $CI_{\beta_1,0.95}$), all of which are consistent with the estimate $\hat{\beta}_1$ 
+
+## Test scores and class sizes
+
+$$Score_i = \beta_0 + \beta_1 STR_i + u_i; \quad i = 1,\ldots,n$$
+
+```{r echo=TRUE, error=FALSE, warning=FALSE}
+# Regression output with heteroskedastic robust SEs
+parameters(lm1, robust = TRUE, vcov_type = "HC1")
+```
+
+
+## 95% coverage probability
+
+<div class="box">
+$$CI_{\beta_1,0.95} = \left[\hat{\beta}_1-1.96 \times \hat{\sigma}_{\hat{\beta}_1}, \hat{\beta}_1+ 1.96 \times \hat{\sigma}_{\hat{\beta}_1}\right]$$
+</div>
+
+- Random sampling implies that the **confidence interval limits are random variables**
+
+- $CI_{\beta_1,0.95}$ is the set of $\beta_1$-values that are not rejected by a two-sided $t$-test with a 5% significance level
+
+- $CI_{\beta_1,0.95}$ is also a interval that has a 95% **coverage probability** of containing the true value $\beta_1$
+
+
+# Summary
+
+## Summary
+
+- A 95%-confidence interval is the range of $\beta_1$-values that are not rejected by a two-sided $t$-test with a 5% significance level
+
+  Provides an estimate of a range of values for $\beta_1$ consistent with estimate $\hat{\beta}_1$
+  
+- A 95%-confidence interval is a random interval with a 95% **coverage probability**: will cover the true value $\beta_1$ in 95/100 random samples
+
+- Confidence intervals are routinely reported by regression software including in R
