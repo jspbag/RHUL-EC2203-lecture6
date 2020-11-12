@@ -53,6 +53,56 @@ CASchools$Score <- (CASchools$read + CASchools$math)/2  # Student test score
 data(CPSSWEducation) # Load CPSSWEducation data
 ```
 
+# EC2203 feedback
+
+## What's working well?
+
+<br>
+
+"The online learning"
+
+"Lecture videos"
+
+"The pre recorded videos are very useful and clear to follow. I find the quizzes very useful too and the work load is not too much"
+
+"Good amount of work"
+
+## What could be improved?
+
+<br>
+
+"Need R studios tutorials because 95% of students on the economics group chat don't understand it and seminars and the time we have with them doesn't give us enough time to learn it"
+
+"Explanations / more examples"
+
+"I often find the problem sets quite challenging, however I find it useful when we go over them in the seminars."
+
+"They seem to assume that we understand R studio but we actually have to look up things for hours trying to grasp simple concepts"
+
+## Experience with Moodle or MS Teams?
+
+<br>
+
+"Brilliant best thing about the 2nd year"
+
+"Good. Registering attendance online is hard though - as I haven't had to do it before, it is not in my routine and I keep forgetting"
+
+"Very good"
+
+## What extra support do you need?
+
+"More tutorial videos and less seminars. Nobody even speaks in the seminars everyone is able to learn with the videos lectures we don't even learn anything due to the limited time so more videos and less lecture times."
+
+"I find the content tricky and am concerned that I will struggle putting the learning into practice and applying the concepts so I think I would benefit from more examples of questions"
+
+"More help sheets maybe with R"
+
+## How to aid safe learning on campus?
+
+"I can't learn on Campus because I have a job I feel that student on campus are selfish and inconsiderate for me to come to Campus i would need people to be sensible and not act like idiots meandering in parties and for people to get serious testing. because I lived in founders last year and with the lack of hygiene I have seen there has 0 confidence for myself. So I am more comfortable learning at home just need more help with r studios and tutorial videos on it because seminars are useless."
+
+"I don't believe much more can be done by way of social distancing measures and it is for students to make their own risk assessment and decision as a result whether to attend in person or online."
+
 # The $t$-test
 
 ## The simple linear regression model

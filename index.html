@@ -532,6 +532,36 @@ EC2203 | Royal Holloway | 2020/21
 </h3>
 </section>
 </section>
+<section><section id="ec2203-feedback" class="title-slide slide level1"><h1>EC2203 feedback</h1></section><section id="whats-working-well" class="slide level2">
+<h2>What’s working well?</h2>
+<p><br></p>
+<p>“The online learning”</p>
+<p>“Lecture videos”</p>
+<p>“The pre recorded videos are very useful and clear to follow. I find the quizzes very useful too and the work load is not too much”</p>
+<p>“Good amount of work”</p>
+</section><section id="what-could-be-improved" class="slide level2">
+<h2>What could be improved?</h2>
+<p><br></p>
+<p>“Need R studios tutorials because 95% of students on the economics group chat don’t understand it and seminars and the time we have with them doesn’t give us enough time to learn it”</p>
+<p>“Explanations / more examples”</p>
+<p>“I often find the problem sets quite challenging, however I find it useful when we go over them in the seminars.”</p>
+<p>“They seem to assume that we understand R studio but we actually have to look up things for hours trying to grasp simple concepts”</p>
+</section><section id="experience-with-moodle-or-ms-teams" class="slide level2">
+<h2>Experience with Moodle or MS Teams?</h2>
+<p><br></p>
+<p>“Brilliant best thing about the 2nd year”</p>
+<p>“Good. Registering attendance online is hard though - as I haven’t had to do it before, it is not in my routine and I keep forgetting”</p>
+<p>“Very good”</p>
+</section><section id="what-extra-support-do-you-need" class="slide level2">
+<h2>What extra support do you need?</h2>
+<p>“More tutorial videos and less seminars. Nobody even speaks in the seminars everyone is able to learn with the videos lectures we don’t even learn anything due to the limited time so more videos and less lecture times.”</p>
+<p>“I find the content tricky and am concerned that I will struggle putting the learning into practice and applying the concepts so I think I would benefit from more examples of questions”</p>
+<p>“More help sheets maybe with R”</p>
+</section><section id="how-to-aid-safe-learning-on-campus" class="slide level2">
+<h2>How to aid safe learning on campus?</h2>
+<p>“I can’t learn on Campus because I have a job I feel that student on campus are selfish and inconsiderate for me to come to Campus i would need people to be sensible and not act like idiots meandering in parties and for people to get serious testing. because I lived in founders last year and with the lack of hygiene I have seen there has 0 confidence for myself. So I am more comfortable learning at home just need more help with r studios and tutorial videos on it because seminars are useless.”</p>
+<p>“I don’t believe much more can be done by way of social distancing measures and it is for students to make their own risk assessment and decision as a result whether to attend in person or online.”</p>
+</section></section>
 <section><section id="the-t-test" class="title-slide slide level1"><h1>The <span class="math inline">\(t\)</span>-test</h1></section><section id="the-simple-linear-regression-model" class="slide level2">
 <h2>The simple linear regression model</h2>
 <ul>
@@ -570,10 +600,10 @@ EC2203 | Royal Holloway | 2020/21
 <span id="cb1-2"><a href="#cb1-2"></a>lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Score <span class="op">~</span><span class="st"> </span>STR, <span class="dt">data =</span> CASchools) <span class="co"># Fitted model in lm1</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="co"># Regression output with heteroskedastic robust SEs</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="kw">parameters</span>(lm1, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
-<pre><code>## Parameter   | Coefficient |    SE |           95% CI | t(418) |      p
-## ----------------------------------------------------------------------
-## (Intercept) |      698.93 | 10.36 | [678.56, 719.31] |  67.44 | &lt; .001
-## STR         |       -2.28 |  0.52 | [ -3.30,  -1.26] |  -4.39 | &lt; .001</code></pre>
+<pre><code>## Parameter   | Coefficient |    SE |           95% CI |     t |  df |      p
+## ---------------------------------------------------------------------------
+## (Intercept) |      698.93 | 10.36 | [678.56, 719.31] | 67.44 | 418 | &lt; .001
+## STR         |       -2.28 |  0.52 | [ -3.30,  -1.26] | -4.39 | 418 | &lt; .001</code></pre>
 </section></section>
 <section><section id="confidence-intervals" class="title-slide slide level1"><h1>Confidence intervals</h1></section><section id="many-many-t-tests" class="slide level2">
 <h2>Many, many <span class="math inline">\(t\)</span>-tests</h2>
@@ -596,10 +626,10 @@ EC2203 | Royal Holloway | 2020/21
 <p><span class="math display">\[Score_i = \beta_0 + \beta_1 STR_i + u_i; \quad i = 1,\ldots,n\]</span></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Regression output with heteroskedastic robust SEs</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="kw">parameters</span>(lm1, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
-<pre><code>## Parameter   | Coefficient |    SE |           95% CI | t(418) |      p
-## ----------------------------------------------------------------------
-## (Intercept) |      698.93 | 10.36 | [678.56, 719.31] |  67.44 | &lt; .001
-## STR         |       -2.28 |  0.52 | [ -3.30,  -1.26] |  -4.39 | &lt; .001</code></pre>
+<pre><code>## Parameter   | Coefficient |    SE |           95% CI |     t |  df |      p
+## ---------------------------------------------------------------------------
+## (Intercept) |      698.93 | 10.36 | [678.56, 719.31] | 67.44 | 418 | &lt; .001
+## STR         |       -2.28 |  0.52 | [ -3.30,  -1.26] | -4.39 | 418 | &lt; .001</code></pre>
 </section><section id="coverage-probability" class="slide level2">
 <h2>95% coverage probability</h2>
 <div class="box">
